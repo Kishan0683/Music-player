@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="eng">
+<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" condensed="width=device-width, initial-scale=1.0">
+		<title>Kishan0683</title>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" integrity="sha512-PgQMlq+nqFLV4ylk1gwUOgm6CtIIXkKwaIHp/PAIWHzig/lKZSEGKEysh0TCVbHJXCLN7WetD8TFecIky75ZfQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+		<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<div class="main_div">
+		<div class="music_container">
+			<h2 id="title">Love ni bhavai</h2>
+			<h3 id="artist">Sandeep Patel</h3>
+			<div class="img_container">
+			   <img src="images/Vhalam.jpg" alt="" />
+			</div>
+			<audio src="music/Vhalam.mp3"></audio>
+			
+			<!---- controls  ---->
+			
+			<div class="music_controls">
+				<i class="fas fa-backward" id="prev" title="Previous"></i>
+				<i class="fas fa-play main_button" id="play" title="Play"></i>
+				<i class="fas fa-forward" id="next" title="Next"></i>
+			</div>
+		</div>
+	</div>
+	<script>
+		 const music = document.querySelector('audio');
+		 const img = document.querySelector('img');
+	     const play = document.getElementById("play");
+		 const artist = document.getElementById("artist");
+		 const title = document.getElementById("title");
+		 const prev = document.getElementById("prev");
+		 const next = document.getElementById("next");
+	
+		 const songs =[
+		 {
+		   name: "Vhalam",
+		   title: "Love ni bhavai",
+		   artist: "Sandeep Patel",
+		   
+		 },
+		 {
+		   name: "Qismat",
+		   title: "Qismat",
+		   artist: "Jagdeep Sidhu",
+		 },
+		 {
+		   name: "Baawla",/*Album*/
+		   title: "Baawla",
+		   artist: "Badshah",
+		 },
+		 ];
+		 let isPlaying = false;
+		 
+		 const playMusic =  () => {
+		   isPlaying = true;
+		   music.play();
+		   play.classList.replace('fa-play', "fa-pause");
+		   img.classList.add("anime");
+		 };
+		 
+		 <!-- Pause -->
+		 const pauseMusic = () => {
+		   isPlaying = false;
+		   music.pause();
+		   play.classList.replace("fa-pause", "fa-play");
+		   img.classList.remove("anime");
+		 };
+		 
+		 play.addEventListener('click', () => {
+		    /*if(isPlaying){
+			   pauseMusic();
+			}else{
+				playMusic();
+			}*/
+			
+			isPlaying ? pauseMusic() : playMusic();
+		 });
+		 
+		 //next music
+		 const loadSong = (songs) => {
+		    title.textContent = songs.title;
+			artist.textContent = songs.artist;
+			music.src = "music/" + songs.name + ".mp3";
+			img.src = "images/" + songs.name + ".jpg";
+		 };
+		 
+		 songIndex = 0;
+		 //loadSong(songs[1]);
+		 
+		 const nextSong = () => {
+		   songIndex = (songIndex + 1) % songs.length;
+		   loadSong(songs[songIndex]);
+		   playMusic();
+		 };
+		 
+		 const prevSong = () => {
+		   songIndex = (songIndex - 1 + songs.length) % songs.length;
+		   loadSong(songs[songIndex]);
+		   playMusic();
+		 };
+		 
+		 next.addEventListener('click', nextSong);
+		 prev.addEventListener('click', prevSong);
+	</script>
+</body>
+</html>
